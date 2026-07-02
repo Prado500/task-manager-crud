@@ -1,11 +1,11 @@
-# Entornos y secretos
+# Local Secret Vaults
 .env
 
-# Configuraciones de IDEs
+# IDE Settings 
 .vscode/
 .idea/
 
-# Basura de OS
+# OS-generated files
 .DS_Store
 Thumbs.db
 desktop.ini
