@@ -1,0 +1,11 @@
+# Entornos y secretos
+.env
+
+# Configuraciones de IDEs
+.vscode/
+.idea/
+
+# Basura de OS
+.DS_Store
+Thumbs.db
+desktop.ini
