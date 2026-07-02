@@ -1,0 +1,27 @@
+[project]
+name = "supervisa-task-manager-api"
+version = "1.0.0"
+description = "Backend API for Supervisa technical test, implementing Clean Architecture."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+    "sqlalchemy>=2.0.42",
+    "asyncpg>=0.30.0",
+    "pydantic-settings>=2.10.1",
+    "python-dotenv>=1.1.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-asyncio>=0.25.0",
+    "httpx>=0.28.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+testpaths = ["test"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
