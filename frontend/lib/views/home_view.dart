@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager_client/views/task_details_view.dart';
 import '../viewmodels/task_view_model.dart';
 import '../widgets/task_card_widget.dart';
 import 'create_task_view.dart';
@@ -193,7 +194,12 @@ class _HomeViewState extends State<HomeView> {
         return TaskCardWidget(
           task: task,
           onEdit: () {
-            // TODO: Navigate to Edit View passing the task
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TaskDetailsView(task: task),
+              ),
+            );
           },
           onDelete: () async {
             final success = await viewModel.deleteTask(task.taskId!);
