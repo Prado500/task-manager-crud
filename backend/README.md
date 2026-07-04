@@ -30,9 +30,25 @@ El código fuente está centralizado en el directorio `app/` y encapsulado en ca
 
 ---
 
-##  Entorno de Desarrollo Local
+##  Entorno de Desarrollo Local y Ejecución (Recomendado: Docker)
 ---
-Si desea ejecutar, depurar o modificar la API directamente en su máquina (por fuera de Docker), siga estos pasos:
+
+La forma más segura, rápida y recomendada de evaluar este proyecto es utilizando contenedores. Esto garantiza que tanto la base de datos PostgreSQL como la API se levanten con la configuración exacta requerida.
+
+Ubíquese en la **raíz absoluta del proyecto** (donde se encuentran el archivo `docker-compose.yml`, a la misma altura del directorio `backend/` y el directorio `frontend/`) y ejecute:
+
+```bash
+docker-compose up --build -d
+```
+*Una vez los contenedores estén en ejecución, la documentación interactiva de la API estará disponible en: http://localhost:8000/docs*
+
+---
+## Entorno de Desarrollo Local (Sin Docker)
+---
+Si desea ejecutar, depurar o modificar la API directamente en su máquina (por fuera de Docker), siga estos pasos.
+
+⚠️ **Prerrequisito Crítico:**⚠️ El backend requiere una instancia de PostgreSQL activa para iniciar. Asegúrese de tener una base de datos corriendo localmente antes de ejecutar el servidor, de lo contrario la aplicación fallará al intentar construir las tablas.
+
 
 ### 1. Preparación del Entorno Virtual
 Ubíquese en la carpeta `backend/` y cree un entorno virtual aislado:
@@ -56,6 +72,14 @@ pip install -e .[dev]
 
 Cree un archivo .env en la raíz de la carpeta backend/ basándose en el archivo de ejemplo proporcionado:
 
+**Comando para Símbolo del Sistema (Windows CMD):**
+
+```bash
+copy .env.example .env
+```
+
+**Comando para terminales Bash (Linux/Mac/GitBash):**
+
 ```bash
 cp .env.example .env
 ```
@@ -74,7 +98,23 @@ uvicorn app.main:app --reload
 ---
 ## Pruebas Automatizadas
 ---
-El proyecto incluye una suite de pruebas configurada para ejecutarse en un event loop asíncrono. Con el entorno virtual activado, ejecute:
+
+El proyecto incluye una suite de pruebas unitarias asíncronas diseñadas para garantizar la integridad de los contratos de la API (Routing, Status Codes, y Serialización Pydantic) sin depender de una conexión a base de datos en vivo.
+
+Estrategia de Testing (Dependency Overrides):
+Para garantizar la velocidad y el aislamiento de las pruebas, se utilizó la sobrescritura de dependencias de FastAPI (app.dependency_overrides). Se inyectó un AsyncMock en la capa de servicios (TaskService), bloqueando el acceso real a PostgreSQL y permitiendo validar estrictamente la capa Delivery.
+
+Casos de Prueba Implementados:
+
+* test_create_task: Valida el endpoint POST /tasks/, verificando la correcta asimilación del payload DTO y el código de estado HTTP 201 (Created).
+
+* test_list_tasks: Valida el endpoint GET /tasks/, asegurando que la API retorna listas serializadas correctamente bajo el código HTTP 200 (OK).
+
+* test_update_task: Evalúa el endpoint PUT /tasks/{task_id}, comprobando la funcionalidad de actualización parcial y el código HTTP 200 (OK).
+
+* test_delete_task: Confirma que el endpoint DELETE /tasks/{task_id} ejecute la eliminación y retorne el código HTTP 204 (No Content).
+
+Para ejecutar la suite completa, asegúrese de tener el entorno virtual activado y ejecute el siguiente comando (no requiere Docker ni base de datos activa):
 
 ```bash
 pytest
