@@ -1,9 +1,9 @@
 import uuid
-from sqlalchemy import Column, String, Date, Enum as SQLEnum, Text
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, String, Date, Enum as SQLEnum
+from app.database.database import Base
 import enum
 
-Base = declarative_base()
+
 
 class TaskPriority(str, enum.Enum):
     HIGH = "high"
