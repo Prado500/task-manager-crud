@@ -45,8 +45,7 @@ app.*.map.json
 
 # Environments and Secrets (CRITICAL)
 .env
-.env.*
-*.env
+
 
 # Missing Flutter artifacts
 .flutter-plugins
