@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from typing import Optional
 from datetime import date
 from app.models.task import TaskPriority, TaskStatus
@@ -26,5 +26,4 @@ class TaskUpdate(BaseModel):
 class TaskResponse(TaskBase):
     task_id: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
