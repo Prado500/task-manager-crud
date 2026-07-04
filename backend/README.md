@@ -30,9 +30,25 @@ El código fuente está centralizado en el directorio `app/` y encapsulado en ca
 
 ---
 
-##  Entorno de Desarrollo Local
+##  Entorno de Desarrollo Local y Ejecución (Recomendado: Docker)
 ---
-Si desea ejecutar, depurar o modificar la API directamente en su máquina (por fuera de Docker), siga estos pasos:
+
+La forma más segura, rápida y recomendada de evaluar este proyecto es utilizando contenedores. Esto garantiza que tanto la base de datos PostgreSQL como la API se levanten con la configuración exacta requerida.
+
+Ubíquese en la **raíz absoluta del proyecto** (donde se encuentran el archivo `docker-compose.yml`, a la misma altura del directorio `backend/` y el directorio `frontend/`) y ejecute:
+
+```bash
+docker-compose up --build -d
+```
+*Una vez los contenedores estén en ejecución, la documentación interactiva de la API estará disponible en: http://localhost:8000/docs*
+
+---
+## Entorno de Desarrollo Local (Sin Docker)
+---
+Si desea ejecutar, depurar o modificar la API directamente en su máquina (por fuera de Docker), siga estos pasos.
+
+⚠️ **Prerrequisito Crítico:**⚠️ El backend requiere una instancia de PostgreSQL activa para iniciar. Asegúrese de tener una base de datos corriendo localmente antes de ejecutar el servidor, de lo contrario la aplicación fallará al intentar construir las tablas.
+
 
 ### 1. Preparación del Entorno Virtual
 Ubíquese en la carpeta `backend/` y cree un entorno virtual aislado:
@@ -55,6 +71,14 @@ pip install -e .[dev]
 ### 3. Variables de Entorno
 
 Cree un archivo .env en la raíz de la carpeta backend/ basándose en el archivo de ejemplo proporcionado:
+
+**Comando para Símbolo del Sistema (Windows CMD):**
+
+```bash
+copy .env.example .env
+```
+
+**Comando para terminales Bash (Linux/Mac/GitBash):**
 
 ```bash
 cp .env.example .env
