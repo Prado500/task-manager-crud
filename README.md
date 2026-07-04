@@ -69,9 +69,9 @@ El proyecto está estructurado como un monorepo. Para facilitar el despliegue de
 
 Las decisiones arquitectónicas, principios de diseño, e instrucciones adicionales para la ejecución del proyecto en dispositivos físicos/web y/o sin uso de docker, asi como las guías para pruebas unitarias, han sido documentadas a profundidad en sus respectivos módulos. Puede hacer clic en los siguientes enlaces para acceder a la documentación:
 
-📄 **[Documentación detallada del Backend (FastAPI + Clean Architecture)  disponible en: backend/README.md](.backend/README.md)**   
+📄 **[Documentación detallada del Backend (FastAPI + Clean Architecture)  disponible en: backend/README.md](backend/README.md)**   
 
-📄 **[Documentación detallada del Frontend (Flutter + MVVM + WDD)  disponible en: frontend/README.md](.frontend/README.md)** 
+📄 **[Documentación detallada del Frontend (Flutter + MVVM + WDD)  disponible en: frontend/README.md](frontend/README.md)** 
 
 ---
 ## Autoría
