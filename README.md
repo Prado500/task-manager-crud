@@ -1,108 +1,70 @@
----
-# Backend - Supervisa Task API - v0.1.0
----
-API RESTful **asíncrona** desarrollada para soportar el sistema de gestión de tareas. Este microservicio está construido con un enfoque estricto en rendimiento, tipado estático y separación de responsabilidades mediante *Clean Architecture*.
+
+# Supervisa Task Manager - Prueba Técnica
+
+Solución a la prueba técnica de admisión para el cargo de Ingeniero en Formación en Supervisa S.A.S. Un sistema CRUD completo para la gestión de tareas estructurado como un monorepo (Backend + Mobile App).
+
 
 ---
-##  Stack Tecnológico
+##  Guía de Inicio Rápido
 ---
-- **Framework Core:** FastAPI (Asíncrono)
-- **Servidor ASGI:** Uvicorn
-- **ORM & Base de Datos:** SQLAlchemy 2.0.42 (AsyncSession) + PostgreSQL (driver `asyncpg`)
-- **Validación de Datos (DTOs):** Pydantic + Pydantic-Settings
-- **Testing:** Pytest + HTTPX + Pytest-Asyncio
-- **Gestión de Paquetes:** `pyproject.toml` (PEP 621)
+Para su probar la aplicación en su totalidad, el proyecto está dividido en dos flujos de ejecución: el entorno de servidor (Dockerizado) y el entorno cliente (Nativo/Emulador).
 
----
+### 1. Prerrequisitos del Sistema
 
-##  Estructura del Proyecto (Clean Architecture)
----
-El código fuente está centralizado en el directorio `app/` y encapsulado en capas lógicas para garantizar la modularidad y escalabilidad del sistema:
+- **Docker y Docker Compose** 
+- **Flutter SDK Versión 3.x o superior**
+- **Android Studio** (con un emulador Android configurado) o Xcode (para simulador iOS).
+- Puertos **`8000`** (API) y **`5432`** (PostgreSQL) disponibles.
 
-- `api/v1/`: Controladores (Routers) que exponen los endpoints HTTP y manejan las peticiones del cliente.
-- `core/`: Configuraciones críticas del sistema (Variables de entorno, CORS).
-- `database/`: Configuración del motor asíncrono y gestión del pool de conexiones.
-- `models/`: Entidades de dominio mapeadas a tablas SQL mediante SQLAlchemy.
-- `schemas/`: Contratos de datos (DTOs) en Pydantic para validación estricta de entradas y salidas.
-- `repositories/`: Capa de persistencia (Abstracción de consultas a la base de datos).
-- `services/`: Capa que contiene la lógica de negocio y reglas de validación.
-- `tests/`: Suite de pruebas unitarias y de integración.
 
----
 
-##  Entorno de Desarrollo Local y Ejecución (Recomendado: Docker)
----
+### 2. Levantar el Backend y Base de Datos 
+El backend está completamente contenerizado para evitar configuraciones locales.
 
-La forma más segura, rápida y recomendada de evaluar este proyecto es utilizando contenedores. Esto garantiza que tanto la base de datos PostgreSQL como la API se levanten con la configuración exacta requerida.
+1. Abra una terminal en la raíz del proyecto.
+2. Ejecute el siguiente comando:
+   ```bash
+   docker-compose up -d --build
+   ```
+Verifique que el servicio esté corriendo accediendo a la documentación de la API en su navegador:
 
-Ubíquese en la **raíz absoluta del proyecto** (donde se encuentran el archivo `docker-compose.yml`, a la misma altura del directorio `backend/` y el directorio `frontend/`) y ejecute:
+Swagger UI: http://localhost:8000/docs
+
+### 3. Ejecutar el Cliente 
+Con el backend corriendo en el puerto 8000, ahora puede levantar el cliente Flutter.
+
+Asegúrese de tener su emulador abierto (Android/iOS) o un dispositivo físico conectado.
+
+Abra una nueva pestaña en su terminal y navegue a la carpeta del frontend:
 
 ```bash
-docker-compose up --build -d
+cd frontend
+
 ```
-*Una vez los contenedores estén en ejecución, la documentación interactiva de la API estará disponible en: http://localhost:8000/docs*
+Instale las dependencias de Dart:
+
+```bash
+flutter pub get
+```
+Ejecute la aplicación:
+
+```bash
+flutter run
+```
+
+Nota para el evaluador: La aplicación está configurada por defecto para apuntar a http://localhost:8000 (o http://10.0.2.2:8000 en emuladores Android) para comunicarse con la API local.
 
 ---
-## Entorno de Desarrollo Local (Sin Docker)
+##  Arquitectura y Documentación Detallada
 ---
-Si desea ejecutar, depurar o modificar la API directamente en su máquina (por fuera de Docker), siga estos pasos.
 
-⚠️ **Prerrequisito Crítico:**⚠️ El backend requiere una instancia de PostgreSQL activa para iniciar. Asegúrese de tener una base de datos corriendo localmente antes de ejecutar el servidor, de lo contrario la aplicación fallará al intentar construir las tablas.
+El proyecto está estructurado como un monorepo que contiene tanto la API backend como el cliente móvil. Para su facilidad se colocó el docker-compose.yml a la altura de la carpeta raiz del proyecto (por fuera de la carpeta **backend**), para pueda levantarlo apenas accede al directorio principal. Para el  **backend** se utilizó el stack de **FastAPI** bajo *Clean Architecture* estrícta y para el cliente se desarrolló un proyecto **Flutter**  compilable a multiplataforma (Web y Mobile) bajo *MVVM* y *Widget-Driven Desing*.
 
+Para informacón detallada sobre las decisiones arquitectónicas, patrones de diseño y cómo ejecutar los entornos de desarrollo locales (sin Docker) o las pruebas unitarias, por favor consulte la documentación específica de cada módulo:
 
-### 1. Preparación del Entorno Virtual
-Ubíquese en la carpeta `backend/` y cree un entorno virtual aislado:
-```bash
-python -m venv .venv
-```
-Active el entorno virtual (Comando para Windows):
+📄 Documentación del Backend disponible en: **backend/README.md** 
 
-```bash
-.\.venv\Scripts\activate
-```
-
-### 2. Instalación de Dependencias
-Instale el proyecto en "modo editable" incluyendo las herramientas de desarrollo y testing:
-
-```bash
-pip install -e .[dev]
-```
-
-### 3. Variables de Entorno
-
-Cree un archivo .env en la raíz de la carpeta backend/ basándose en el archivo de ejemplo proporcionado:
-
-**Comando para Símbolo del Sistema (Windows CMD):**
-
-```bash
-copy .env.example .env
-```
-
-**Comando para terminales Bash (Linux/Mac/GitBash):**
-
-```bash
-cp .env.example .env
-```
-*(Asegúrese de que las credenciales apunten a una instancia de PostgreSQL accesible).*
-
-
-### 4. Ejecución del Servidor
-Levante el servidor en modo desarrollo (con recarga automática ante cambios):
-
-```bash
-uvicorn app.main:app --reload
-```
-
-*La documentación interactiva estará disponible inmediatamente en: http://localhost:8000/docs*
-
----
-## Pruebas Automatizadas
----
-El proyecto incluye una suite de pruebas configurada para ejecutarse en un event loop asíncrono. Con el entorno virtual activado, ejecute:
-
-```bash
-pytest
-```
+📄 Documentación del Frontend disponible en: **frontend/README.md**
 
 ---
 ##  Autoría 
