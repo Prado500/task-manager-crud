@@ -1,24 +1,47 @@
-// TODO: Implement fromJson and toJson factory methods to map these properties
-
-
 class TaskModel {
-  final String taskId;
+  final String? taskId;
   final String title;
-  String? description;
+  final String? description;
   final String dueDate;
-  final String priority; // Accepted values: 'high', 'medium', 'low'
-  final String status; // Accepted values: 'pending', 'in_progress', 'completed'
-  final String originFramework; // Default: 'flutter'
+  final String priority;
+  final String status;
+  final String originFramework;
   final String userEmail;
 
   TaskModel({
-    required this.taskId,
+    this.taskId,
     required this.title,
     this.description,
     required this.dueDate,
     required this.priority,
     required this.status,
-    required this.originFramework,
-    required this.userEmail,
+    this.originFramework = 'flutter',
+    this.userEmail = 'aspirante@supervisa.co', // Hardcodeado temporalmente por agilidad
   });
+
+  factory TaskModel.fromJson(Map<String, dynamic> json) {
+    return TaskModel(
+      taskId: json['task_id'],
+      title: json['title'],
+      description: json['description'],
+      dueDate: json['due_date'],
+      priority: json['priority'],
+      status: json['status'],
+      originFramework: json['origin_framework'] ?? 'flutter',
+      userEmail: json['user_email'] ?? 'aspirante@supervisa.co',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (taskId != null) 'task_id': taskId,
+      'title': title,
+      'description': description,
+      'due_date': dueDate,
+      'priority': priority,
+      'status': status,
+      'origin_framework': originFramework,
+      'user_email': userEmail,
+    };
+  }
 }
