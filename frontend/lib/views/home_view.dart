@@ -18,25 +18,24 @@ class _HomeViewState extends State<HomeView> {
   String _selectedStatus = 'All';
   String _selectedPriority = 'All';
 
-  // Backend value mappings for Status filters
+  // Backend value mappings for Status filters (UI in Spanish)
   final Map<String, String> _statusOptions = {
-    'All': 'All',
-    'pending': 'Pending',
-    'in_progress': 'In Progress',
-    'completed': 'Done',
+    'All': 'Todas',
+    'pending': 'Pendientes',
+    'in_progress': 'En progreso',
+    'completed': 'Completadas',
   };
 
-  // Backend value mappings for Priority filters
+  // Backend value mappings for Priority filters (UI in Spanish)
   final Map<String, String> _priorityOptions = {
-    'All': 'All',
-    'high': 'High',
-    'medium': 'Medium',
-    'low': 'Low',
+    'All': 'Todas',
+    'high': 'Alta',
+    'medium': 'Media',
+    'low': 'Baja',
   };
 
   @override
   Widget build(BuildContext context) {
-
     final viewModel = context.watch<TaskViewModel>();
 
     return Scaffold(
@@ -45,13 +44,13 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
-          'TaskFlow',
+          'Gestión de Tareas',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.black54),
-            onPressed: () {}, // Future settings implementation
+            onPressed: () {},
           ),
         ],
       ),
@@ -74,12 +73,12 @@ class _HomeViewState extends State<HomeView> {
           BottomNavigationBarItem(
             icon: Icon(Icons.assignment_outlined),
             activeIcon: Icon(Icons.assignment),
-            label: 'Tasks',
+            label: 'Tareas',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_outlined),
             activeIcon: Icon(Icons.dashboard),
-            label: 'Insights',
+            label: 'Estadísticas',
           ),
         ],
       ),
@@ -106,7 +105,6 @@ class _HomeViewState extends State<HomeView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Status Filters
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -132,7 +130,6 @@ class _HomeViewState extends State<HomeView> {
               }).toList(),
             ),
           ),
-          // Priority Filters
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -178,7 +175,7 @@ class _HomeViewState extends State<HomeView> {
     if (viewModel.tasks.isEmpty) {
       return const Center(
         child: Text(
-          "No tasks match your filters. Add a new one!",
+          "No hay tareas que coincidan con tus filtros. ¡Agrega una nueva!",
           style: TextStyle(color: Colors.black54),
         ),
       );
@@ -198,7 +195,7 @@ class _HomeViewState extends State<HomeView> {
             if (success && mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Task deleted successfully'),
+                  content: Text('Tarea eliminada exitosamente'),
                   behavior: SnackBarBehavior.floating,
                 ),
               );
@@ -213,7 +210,7 @@ class _HomeViewState extends State<HomeView> {
   Widget _buildInsightsPlaceholder() {
     return const Center(
       child: Text(
-        "Insights View coming next...",
+        "Vista de estadísticas próximamente...",
         style: TextStyle(color: Colors.black54, fontSize: 16),
       ),
     );
