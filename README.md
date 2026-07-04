@@ -1,75 +1,83 @@
-
+---
 # Supervisa Task Manager - Prueba Técnica
+---
 
-Solución a la prueba técnica de admisión para el cargo de Ingeniero en Formación en Supervisa S.A.S. Un sistema CRUD completo para la gestión de tareas estructurado como un monorepo (Backend + Mobile App).
-
+Solución a la prueba técnica de admisión para el cargo de **Ingeniero en Formación** en Supervisa S.A. Un sistema CRUD completo para la gestión de tareas estructurado como un monorepo (Backend + Mobile App).
 
 ---
 ##  Guía de Inicio Rápido
 ---
-Para su probar la aplicación en su totalidad, el proyecto está dividido en dos flujos de ejecución: el entorno de servidor (Dockerizado) y el entorno cliente (Nativo/Emulador).
+Para evaluar la aplicación en su totalidad, el proyecto está dividido en dos flujos de ejecución: la infraestructura del servidor (Dockerizada para evaluación inmediata) y el entorno cliente (Emulador/Nativo).
 
 ### 1. Prerrequisitos del Sistema
+- **Docker y Docker Compose** instalados y en ejecución.
 
-- **Docker y Docker Compose** 
-- **Flutter SDK Versión 3.x o superior**
-- **Android Studio** (con un emulador Android configurado) o Xcode (para simulador iOS).
+- **Flutter SDK** (Versión 3.x o superior).
+
+- **Android Studio / IntelliJ IDEA** con un *Android Virtual Device (AVD)* configurado (Recomendado).
+
 - Puertos **`8000`** (API) y **`5432`** (PostgreSQL) disponibles.
 
+### 2. Levantar el Backend y Base de Datos (Vía Docker)
+El backend está completamente contenerizado para evitar configuraciones locales tediosas y garantizar la integridad de la base de datos PostgreSQL.
 
+**1.** Abra una terminal en la **raíz absoluta** de este proyecto (estando a la misma altura de los directorios `backend/` y `frontend/`).
 
-### 2. Levantar el Backend y Base de Datos 
-El backend está completamente contenerizado para evitar configuraciones locales.
-
-1. Abra una terminal en la raíz del proyecto.
-2. Ejecute el siguiente comando:
+**2.** Ejecute el siguiente comando para construir e iniciar los contenedores en segundo plano:
    ```bash
    docker-compose up -d --build
    ```
-Verifique que el servicio esté corriendo accediendo a la documentación de la API en su navegador:
+*Verifique que el servicio esté corriendo accediendo a la documentación interactiva de la API en su navegador: Swagger UI: http://localhost:8000/docs*
 
-Swagger UI: http://localhost:8000/docs
+### 3. Ejecutar el Cliente Flutter (Vía Emulador Android)
 
-### 3. Ejecutar el Cliente 
-Con el backend corriendo en el puerto 8000, ahora puede levantar el cliente Flutter.
+Con el backend corriendo en el puerto 8000, levante el cliente móvil.
 
-Asegúrese de tener su emulador abierto (Android/iOS) o un dispositivo físico conectado.
+⚠️ **Paso Crítico ⚠️ - Configuración de Red: El cliente requiere saber a qué entorno conectarse:**
 
-Abra una nueva pestaña en su terminal y navegue a la carpeta del frontend:
+**1.** Abra una nueva terminal y navegue a la carpeta del frontend (Asegúrese de estar en el directorio `frontend/`):
 
 ```bash
 cd frontend
-
 ```
-Instale las dependencias de Dart:
+**2.** Instale las dependencias de Dart:
 
 ```bash
 flutter pub get
 ```
-Ejecute la aplicación:
+**3.** Configure las variables de entorno: 
+
+Copie el archivo de ejemplo para habilitar la conexión de red correcta. Para probar en un emulador de Android, el sistema utilizará por defecto la IP de puente 10.0.2.2 configurada en el archivo.
+
+```bash
+cp .env.example .env
+```
+
+*(Para Windows CMD: copy .env.example .env)*
+
+**4.** Abra su emulador de Android (AVD) desde Android Studio o su IDE de preferencia.
+
+**5.** Ejecute la aplicación:
 
 ```bash
 flutter run
 ```
+---
+## Arquitectura y Documentación Detallada
+---
+El proyecto está estructurado como un monorepo. Para facilitar el despliegue de la infraestructura, el archivo docker-compose.yml se ubicó en la raíz.
 
-Nota para el evaluador: La aplicación está configurada por defecto para apuntar a http://localhost:8000 (o http://10.0.2.2:8000 en emuladores Android) para comunicarse con la API local.
+Las decisiones arquitectónicas, principios de diseño, e instrucciones adicionales para la ejecución del proyecto en dispositivos físicos/web y/o sin uso de docker, asi como las guías para pruebas unitarias, han sido documentadas a profundidad en sus respectivos módulos. Puede hacer clic en los siguientes enlaces para acceder a la documentación:
+
+📄 **[Documentación detallada del Backend (FastAPI + Clean Architecture)  disponible en: backend/README.md](.backend/README.md)**   
+
+📄 **[Documentación detallada del Frontend (Flutter + MVVM + WDD)  disponible en: frontend/README.md](.frontend/README.md)** 
 
 ---
-##  Arquitectura y Documentación Detallada
+## Autoría
 ---
-
-El proyecto está estructurado como un monorepo que contiene tanto la API backend como el cliente móvil. Para su facilidad se colocó el docker-compose.yml a la altura de la carpeta raiz del proyecto (por fuera de la carpeta **backend**), para pueda levantarlo apenas accede al directorio principal. Para el  **backend** se utilizó el stack de **FastAPI** bajo *Clean Architecture* estrícta y para el cliente se desarrolló un proyecto **Flutter**  compilable a multiplataforma (Web y Mobile) bajo *MVVM* y *Widget-Driven Desing*.
-
-Para informacón detallada sobre las decisiones arquitectónicas, patrones de diseño y cómo ejecutar los entornos de desarrollo locales (sin Docker) o las pruebas unitarias, por favor consulte la documentación específica de cada módulo:
-
-📄 Documentación del Backend disponible en: **backend/README.md** 
-
-📄 Documentación del Frontend disponible en: **frontend/README.md**
-
----
-##  Autoría 
----
-
-Desarrollado por **David Alejandro De los Reyes Ostos**, estudiante de décimo semestre de ingeniería de sistemas y candidato a "Ingeniero en Formación".
+Desarrollado por David Alejandro De los Reyes Ostos, estudiante de décimo semestre de ingeniería de sistemas y candidato a "Ingeniero en Formación".
 
 Entregable técnico para Supervisa S.A. (2026).
+
+
