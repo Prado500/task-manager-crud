@@ -115,18 +115,18 @@ class TaskCardWidget extends StatelessWidget {
       case 'in_progress':
         bgColor = Colors.blue.shade100;
         textColor = Colors.blue.shade800;
-        label = 'In Progress';
+        label = 'En progreso';
         break;
       case 'completed':
         bgColor = Colors.green.shade100;
         textColor = Colors.green.shade800;
-        label = 'Completed';
+        label = 'Completada';
         break;
       case 'pending':
       default:
         bgColor = Colors.grey.shade200;
         textColor = Colors.grey.shade800;
-        label = 'Pending';
+        label = 'Pendiente';
         break;
     }
 
@@ -151,18 +151,16 @@ class TaskCardWidget extends StatelessWidget {
     switch (priority) {
       case 'high':
         dotColor = Colors.red;
-        label = 'High';
+        label = 'Alta';
         break;
       case 'low':
         dotColor = Colors.green;
-        label = 'Low';
+        label = 'Baja';
         break;
       case 'medium':
       default:
-      // Se utiliza shade700 para garantizar contraste y legibilidad sobre fondo blanco
-      // cumpliendo estrictamente con la rúbrica (Amarillo).
         dotColor = Colors.yellow.shade700;
-        label = 'Medium';
+        label = 'Media';
         break;
     }
 
