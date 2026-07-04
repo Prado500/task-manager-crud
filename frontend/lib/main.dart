@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_manager_client/viewmodels/task_view_model.dart';
+import 'viewmodels/task_view_model.dart';
 import 'core/theme.dart';
 import 'views/home_view.dart';
 
@@ -15,8 +15,10 @@ class SupervisaTaskApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // TODO: Inject TaskViewModel here later on
-         ChangeNotifierProvider(create: (_) => TaskViewModel()),
+        ChangeNotifierProvider(
+          // La sintaxis '..' (cascade operator) permite instanciar y llamar al método inmediatamente
+          create: (_) => TaskViewModel()..fetchTasks(),
+        ),
       ],
       child: MaterialApp(
         title: 'Supervisa Task Manager',
