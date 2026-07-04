@@ -16,7 +16,7 @@ class TaskModel {
     required this.priority,
     required this.status,
     this.originFramework = 'flutter',
-    this.userEmail = 'aspirante@supervisa.co', // Hardcodeado temporalmente por agilidad
+    this.userEmail = 'aspirante@supervisa.co',
   });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
