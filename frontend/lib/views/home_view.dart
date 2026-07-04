@@ -100,60 +100,60 @@ class _HomeViewState extends State<HomeView> {
 
   /// Renders scrollable filter chips and triggers state updates on selection.
   Widget _buildFilters(TaskViewModel viewModel) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: _statusOptions.entries.map((entry) {
-                final isSelected = _selectedStatus == entry.key;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: ChoiceChip(
-                    label: Text(entry.value),
-                    selected: isSelected,
-                    selectedColor: Colors.black,
-                    labelStyle: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black87,
-                    ),
-                    onSelected: (selected) {
-                      if (selected) {
-                        setState(() => _selectedStatus = entry.key);
-                        viewModel.fetchTasks(status: _selectedStatus, priority: _selectedPriority);
-                      }
-                    },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: _statusOptions.entries.map((entry) {
+              final isSelected = _selectedStatus == entry.key;
+              return Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: ChoiceChip(
+                  label: Text(entry.value),
+                  selected: isSelected,
+                  selectedColor: Colors.black,
+                  labelStyle: TextStyle(
+                    color: isSelected ? Colors.white : Colors.black87,
                   ),
-                );
-              }).toList(),
-            ),
+                  onSelected: (selected) {
+                    if (selected) {
+                      setState(() => _selectedStatus = entry.key);
+                      viewModel.fetchTasks(status: _selectedStatus, priority: _selectedPriority);
+                    }
+                  },
+                ),
+              );
+            }).toList(),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: _priorityOptions.entries.map((entry) {
-                final isSelected = _selectedPriority == entry.key;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: ChoiceChip(
-                    label: Text(entry.value),
-                    selected: isSelected,
-                    backgroundColor: Colors.white,
-                    onSelected: (selected) {
-                      if (selected) {
-                        setState(() => _selectedPriority = entry.key);
-                        viewModel.fetchTasks(status: _selectedStatus, priority: _selectedPriority);
-                      }
-                    },
-                  ),
-                );
-              }).toList(),
-            ),
+        ),
+        const SizedBox(height: 8),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: _priorityOptions.entries.map((entry) {
+              final isSelected = _selectedPriority == entry.key;
+              return Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: ChoiceChip(
+                  label: Text(entry.value),
+                  selected: isSelected,
+                  backgroundColor: Colors.white,
+                  onSelected: (selected) {
+                    if (selected) {
+                      setState(() => _selectedPriority = entry.key);
+                      viewModel.fetchTasks(status: _selectedStatus, priority: _selectedPriority);
+                    }
+                  },
+                ),
+              );
+            }).toList(),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
