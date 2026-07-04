@@ -112,7 +112,20 @@ flutter run -d chrome
 ---
 ## Pruebas Automatizadas
 ---
-El proyecto incluye una suite de pruebas para verificar la lógica de negocio y la serialización bidireccional JSON. Ubíquese en la raíz de `frontend/` y ejecute:
+El proyecto incluye una suite de pruebas unitarias diseñadas para garantizar la integridad de la lógica de negocio y el manejo de estado (ViewModel) en total aislamiento de la capa de red.
+
+**Estrategia de Testing (Inyección de Dependencias Nativa):**
+Para asegurar una ejecución determinista y rápida sin saturar el proyecto con librerías externas de generación de *mocks* (como Mockito), se aprovechó la inyección de dependencias nativa por constructor del `TaskViewModel`. Se implementó un *mock* manual (`MockSupervisaApiAbstraction`) que simula el comportamiento y las latencias de la API, permitiendo validar las transiciones de estado del cliente de forma completamente aislada.
+
+**Casos de Prueba Implementados:**
+
+* `fetchTasks successfully updates state with tasks from API`: Verifica que una respuesta exitosa de la capa de red actualice correctamente la lista de tareas local y gestione las banderas de carga (`isLoading`).
+
+* `fetchTasks handles network exceptions gracefully`: Evalúa la resiliencia del ViewModel, asegurando que las excepciones o caídas del servidor sean capturadas limpiamente y transformadas en mensajes de error reactivos para la UI (`errorMessage`) sin interrumpir la ejecución de la aplicación.
+
+* `Insights getters calculate correct statistics based on internal list`: Valida la precisión matemática de las propiedades de estado derivado (total de tareas, desglose por prioridad y tasa de completadas) que alimentan el panel analítico del usuario.
+
+Para ejecutar la suite completa, abra su terminal, asegúrese de estar ubicado en el directorio `frontend/` y ejecute el siguiente comando (no requiere emuladores ni backend activo):
 
 ```bash
 flutter test
