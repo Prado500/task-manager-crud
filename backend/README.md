@@ -98,7 +98,23 @@ uvicorn app.main:app --reload
 ---
 ## Pruebas Automatizadas
 ---
-El proyecto incluye una suite de pruebas configurada para ejecutarse en un event loop asíncrono. Con el entorno virtual activado, ejecute:
+
+El proyecto incluye una suite de pruebas unitarias asíncronas diseñadas para garantizar la integridad de los contratos de la API (Routing, Status Codes, y Serialización Pydantic) sin depender de una conexión a base de datos en vivo.
+
+Estrategia de Testing (Dependency Overrides):
+Para garantizar la velocidad y el aislamiento de las pruebas, se utilizó la sobrescritura de dependencias de FastAPI (app.dependency_overrides). Se inyectó un AsyncMock en la capa de servicios (TaskService), bloqueando el acceso real a PostgreSQL y permitiendo validar estrictamente la capa Delivery.
+
+Casos de Prueba Implementados:
+
+* test_create_task: Valida el endpoint POST /tasks/, verificando la correcta asimilación del payload DTO y el código de estado HTTP 201 (Created).
+
+* test_list_tasks: Valida el endpoint GET /tasks/, asegurando que la API retorna listas serializadas correctamente bajo el código HTTP 200 (OK).
+
+* test_update_task: Evalúa el endpoint PUT /tasks/{task_id}, comprobando la funcionalidad de actualización parcial y el código HTTP 200 (OK).
+
+* test_delete_task: Confirma que el endpoint DELETE /tasks/{task_id} ejecute la eliminación y retorne el código HTTP 204 (No Content).
+
+Para ejecutar la suite completa, asegúrese de tener el entorno virtual activado y ejecute el siguiente comando (no requiere Docker ni base de datos activa):
 
 ```bash
 pytest
