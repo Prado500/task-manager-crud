@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/task_model.dart';
 
 class SupervisaApiAbstraction {
-  // Ajusta la IP si pruebas en un dispositivo físico
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://127.0.0.1:8000/api/v1'));
+  final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: dotenv.env['API_BASE_URL'] ?? 'http://10.0.2.2:8000/api/v1',
+    ),
+  );
 
   Future<List<TaskModel>> getTasks({String? status, String? priority}) async {
     try {
