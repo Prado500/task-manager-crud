@@ -4,6 +4,7 @@ import 'package:task_manager_client/views/task_details_view.dart';
 import '../viewmodels/task_view_model.dart';
 import '../widgets/task_card_widget.dart';
 import 'create_task_view.dart';
+import 'insights_view.dart';
 
 
 /// Main wrapper layout acting as the host for the bottom navigation
@@ -219,11 +220,6 @@ class _HomeViewState extends State<HomeView> {
 
   /// Temporary placeholder for the upcoming Insights tab.
   Widget _buildInsightsPlaceholder() {
-    return const Center(
-      child: Text(
-        "Vista de estadísticas próximamente...",
-        style: TextStyle(color: Colors.black54, fontSize: 16),
-      ),
-    );
+    return const InsightsView();
   }
 }
