@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/task_view_model.dart';
 import '../widgets/task_card_widget.dart';
+import 'create_task_view.dart';
+
 
 /// Main wrapper layout acting as the host for the bottom navigation
 /// and the primary task list view.
@@ -60,7 +62,10 @@ class _HomeViewState extends State<HomeView> {
         shape: const CircleBorder(),
         child: const Icon(Icons.add, color: Colors.white),
         onPressed: () {
-          // TODO: Navigate to CreateTaskView
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateTaskView()),
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
