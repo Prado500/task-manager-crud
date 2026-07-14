@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager_client/viewmodels/pokemon_viewmodel.dart';
 import 'viewmodels/task_view_model.dart';
 import 'core/theme.dart';
 import 'views/home_view.dart';
@@ -21,8 +22,10 @@ class SupervisaTaskApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          // La sintaxis '..' (cascade operator) permite instanciar y llamar al método inmediatamente
           create: (_) => TaskViewModel()..fetchTasks(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PokemonViewModel()..fetchPokemon(), // Inyección temprana
         ),
       ],
       child: MaterialApp(

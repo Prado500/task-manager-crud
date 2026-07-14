@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager_client/views/pokemon_view.dart';
 import 'package:task_manager_client/views/task_details_view.dart';
 import '../viewmodels/task_view_model.dart';
 import '../widgets/task_card_widget.dart';
@@ -52,6 +53,15 @@ class _HomeViewState extends State<HomeView> {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.catching_pokemon, color: Colors.black54),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PokemonView()),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.black54),
             onPressed: () {},
