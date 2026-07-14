@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.database.database import engine, Base
 from app.api.v1.tasks import router as tasks_router
-
+from app.api.v1.pokemon import router as pokemon_router
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -41,3 +41,4 @@ app.add_middleware(
 
 
 app.include_router(tasks_router, prefix="/api/v1")
+app.include_router(pokemon_router, prefix="/api/v1")
