@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/task_model.dart';
+import '../models/pokemon_model.dart';
 
 class SupervisaApiAbstraction {
   final Dio _dio = Dio(
@@ -48,4 +49,19 @@ class SupervisaApiAbstraction {
       throw Exception('Error al eliminar tarea: $e');
     }
   }
+
+  // ... tus métodos anteriores ...
+
+  // NUEVO MÉTODO PARA POKEMON
+  Future<List<PokemonModel>> getTopPokemon() async {
+    try {
+      final response = await _dio.get('/pokemon/');
+      return (response.data as List)
+          .map((json) => PokemonModel.fromJson(json))
+          .toList();
+    } catch (e) {
+      throw Exception('Error al obtener Pokémon: $e');
+    }
+  }
+
 }
